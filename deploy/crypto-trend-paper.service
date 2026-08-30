@@ -1,0 +1,15 @@
+[Unit]
+Description=Crypto Trend Paper Trading Bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/crypto-trend-bot
+ExecStart=/home/ubuntu/crypto-trend-bot/.venv/bin/crypto-trend paper-daemon --interval-seconds 300
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
