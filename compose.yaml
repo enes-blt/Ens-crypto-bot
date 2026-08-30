@@ -1,0 +1,15 @@
+services:
+  paper-bot:
+    build: .
+    restart: unless-stopped
+    command: ["crypto-trend", "paper-daemon", "--interval-seconds", "300"]
+    volumes:
+      - ./data:/app/data
+      - ./paper:/app/paper
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "from pathlib import Path; import time; p=Path('/app/reports/paper_status.json'); raise SystemExit(0 if p.exists() and time.time()-p.stat().st_mtime < 900 else 1)"]
+      interval: 5m
+      timeout: 10s
+      retries: 2
+
